@@ -32,13 +32,17 @@ If your python installation support venv to create virtual environments, the fol
 
 % cd REP
 comment: navigate to the folder where you saved the reproducibility package REP
+
 % python3 -m venv .
 comment: this creates the folder bin and initializes the virtual environment
+
 % source ./bin/activate
 comment: this activates the virtual environment,
         your terminal shows (REP) at the beginning from now on
+        
 (REP) % python3 -m pip install gurobipy numpy scipy
 comment: this installs the packages in the virtual environment
+
 (REP) % python3 main_short.py
 comment: expect this command to take 2 hours
 
