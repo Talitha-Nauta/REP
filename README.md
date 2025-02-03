@@ -31,19 +31,24 @@ https://www.gurobi.com/features/academic-named-user-license/
 If your python installation support venv to create virtual environments, the following commands would make it possible to create a virtual environment and run the code inside said virtual environment on a linux. This requires that you have a gurobi license, otherwise only parts of the execution will work.   
 
 % cd REP
+
 comment: navigate to the folder where you saved the reproducibility package REP
 
 % python3 -m venv .
+
 comment: this creates the folder bin and initializes the virtual environment
 
 % source ./bin/activate
+
 comment: this activates the virtual environment,
         your terminal shows (REP) at the beginning from now on
         
 (REP) % python3 -m pip install gurobipy numpy scipy
+
 comment: this installs the packages in the virtual environment
 
 (REP) % python3 main_short.py
+
 comment: expect this command to take 2 hours
 
 
