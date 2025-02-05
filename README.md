@@ -72,7 +72,7 @@ comment: expect this command to take approximately 2 hours
 
 comment: Render pdf with figure or use the Makefile instead
 
-# Or on windows
+### Or on windows
 
 > cd REP
 
