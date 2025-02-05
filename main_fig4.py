@@ -51,37 +51,25 @@ def define_system(system):
 
 #Create output folders
 try:
-    os.makedirs("results_bin_chi2/furuta_hold")
-    os.makedirs("results_bin_chi2/furuta_zero")
-    os.makedirs("results_bin_chi2/qt_nmp")
     os.makedirs("results_bin/furuta_hold")
     os.makedirs("results_bin/furuta_zero")
-    os.makedirs("results_bin/qt_nmp")
-    os.makedirs("results_chi2/furuta_hold")
-    os.makedirs("results_chi2/furuta_zero")
-    os.makedirs("results_chi2/qt_nmp")
     print("starting")
 
 except OSError:  # parts of this experiment set might already have been performed
     print("part of the results might already present - remove existing result folders")
     exit(1)
 
-window_lengths = np.arange(10,21,2) #Last step not included in arange
-prob = 0.01*np.arange(1,26,2) #Avoid numerical error #steps of two is enough to cover all combinations for allowed deadline misses per window_length
+window_lengths = np.arange(10,19,2) #Last step not included in arange
+prob = 0.01*np.arange(9,26,8) #Avoid numerical error #steps of two is enough to cover all combinations for allowed deadline misses per window_length
 
 for a_length in np.arange(1,28,1): #Corresponds to lengths 1-25 in pratice as both first and last are forced to be a deadline hit in the optimisation implementation
     st = time.time() #Start time
-    for system in ['furuta_zero','furuta_hold','qt_nmp']:  #furuta_zero, furuta_hold, qt_nmp
-        for a_max in range(1,6):  #a_max 1-5
-            for window_length in window_lengths: #window_length 10:2:20
-                for p_miss in prob: #p_miss 0.01:0.02:0.25
+    for system in ['furuta_zero','furuta_hold']:  #furuta_zero, furuta_hold
+        for a_max in [4]:  #a_max 4
+            for window_length in window_lengths: #window_length 10:2:18
+                for p_miss in prob: #p_miss 0.09:0.08:0.25
 
                     Phi_miss, Phi_hit, C, Q, x0, nx = define_system(system)
-                    #Do bin + chi2 test
-                    try:
-                        exec(open("./optimise_bin_chi2.py").read()) 
-                    except:
-                        print(f"There was a problem for length={a_length}, system={system}, a_max = {a_max}, window length = {window_length}, p miss = {p_miss}, test = bin + chi2")
 
                     #Do binary test
                     try:
@@ -89,12 +77,6 @@ for a_length in np.arange(1,28,1): #Corresponds to lengths 1-25 in pratice as bo
                     except:
                         print(f"There was a problem for length={a_length}, system={system}, a_max = {a_max}, window length = {window_length}, p miss = {p_miss}, test = bin")
 
-                    #Do chi2 test
-                    if window_length == 20: #Same for every window length, so do only once
-                        try:
-                            exec(open("./optimise_chi2.py").read()) 
-                        except:
-                            print(f"There was a problem for length={a_length}, system={system}, a_max = {a_max}, window length = {window_length}, p miss = {p_miss}, test = chi2")
 
     #Print elapsed time per window length
     et = time.time() 
